@@ -7,20 +7,31 @@ const Products = ({
   addToCart,
 }) => {
 
-  const filteredProducts = medicines.filter((item) => {
+  /* ================= FILTER PRODUCTS ================= */
 
-    const matchesCategory =
-      selectedCategory === "All"
-        ? true
-        : item.category === selectedCategory;
+  const filteredProducts =
+    medicines.filter((item) => {
 
-    const matchesSearch =
-      searchTerm.trim() === ""
-        ? true
-        : item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        selectedCategory === "All"
+          ? true
+          : item.category ===
+            selectedCategory;
 
-    return matchesCategory && matchesSearch;
-  });
+      const matchesSearch =
+        searchTerm.trim() === ""
+          ? true
+          : item.name
+              .toLowerCase()
+              .includes(
+                searchTerm.toLowerCase()
+              );
+
+      return (
+        matchesCategory &&
+        matchesSearch
+      );
+    });
 
   return (
     <section
@@ -28,25 +39,34 @@ const Products = ({
       className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16"
     >
 
+      {/* TITLE */}
       <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">
 
         {searchTerm.trim()
           ? `Search Results for "${searchTerm}"`
-          : `${selectedCategory} Products`
-        }
+          : `${selectedCategory} Products`}
 
       </h2>
 
+      {/* PRODUCTS */}
       {filteredProducts.length > 0 ? (
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
 
           {filteredProducts.map((item) => (
-            <ProductCard
+
+            /* IMPORTANT */
+            <div
               key={item.id}
-              item={item}
-              addToCart={addToCart}
-            />
+              id={`product-${item.id}`}
+            >
+
+              <ProductCard
+                item={item}
+                addToCart={addToCart}
+              />
+
+            </div>
           ))}
 
         </div>
